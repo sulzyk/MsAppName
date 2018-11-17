@@ -6,8 +6,11 @@ using System.Web.Mvc;
 using AppName.DataAccess;
 using AppName.Logic.Interfaces;
 using AppName.Models;
+using AppName.Web.Infastructure;
 using AppName.Web.ViewModels.Products;
 using AutoMapper;
+using Syncfusion.JavaScript;
+using Syncfusion.JavaScript.DataSources;
 
 namespace AppName.Web.Controllers
 {
@@ -30,32 +33,37 @@ namespace AppName.Web.Controllers
         // GET: Products1
         public ActionResult Index()
         {
-            using (var db = new DataContext())
+            //var result = Logic.GetAllActive();
+
+            //var viewModel = Mapper.Map<List<ProductViewModel>>(result.Value.ToList());
+
+            return View();
+        }
+
+        public ActionResult DataSource(DataManager dataManager)
+        {
+            var productsResult = Logic.GetAllActive();
+
+            var operation = new DataOperations();
+
+            var products = operation.Execute(productsResult.Value, dataManager);
+
+            var viewModels = Mapper.Map<List<ProductViewModel>>(products);
+
+            return Json(new
             {
-                db.Database.Log = log => System.Diagnostics.Debug.WriteLine(log);
-
-                var viewModels = db.Products.Select(p =>
-                new ProductViewModel{
-                    Id = p.Id,
-                    Name = p.Name,
-                    Category = p.Category.Name
-                })
-                    .ToList();
-
-                return View(viewModels);
-            }
+                result = viewModels,
+                count = productsResult.Value.Count()
+            },JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Create()
         {
-            using (var db = new DataContext())
-            {
-                var viewModel = new ProductViewModel();
+            var viewModel = new ProductViewModel();
 
-                Supply(viewModel, db);
+            Supply(viewModel);
 
-                return View(viewModel);
-            }
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -63,7 +71,7 @@ namespace AppName.Web.Controllers
         {
             if (ModelState.IsValid == false)
             {
-                //Supply(viewModel, db);
+                Supply(viewModel);
                 return View(viewModel);
             }
 
@@ -80,30 +88,25 @@ namespace AppName.Web.Controllers
 
             if (result.Success == false)
             {
-
+                Supply(viewModel);
+                result.AddErrorToModelState(ModelState);
+                return View(viewModel);
             }
 
             return RedirectToAction("Index");
 
         }
 
-        private void Supply(ProductViewModel viewModel,
-            DataContext db)
+        private void Supply(ProductViewModel viewModel)
         {
 
-            var categories = CategoryLogic.GetAllActive();
+            var result = CategoryLogic.GetAllActive();
 
-            if (categories.Success)
+            if (result.Success)
             {
-                viewModel.Categories = categories.Value
-                .Select(c => new SelectListItem()
-                {
-                    Text = c.Name,
-                    Value = c.Id.ToString()
-                })
-                .ToList();
+                viewModel.Categories = Mapper.Map<List<SelectListItem>>(result.Value);
             }
-            
+
         }
     }
 }

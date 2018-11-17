@@ -10,6 +10,8 @@ namespace AppName.Web.App_Start
 {
     public class AutofacConfig
     {
+        public static AutofacDependencyResolver Resolver { get; set; }
+
         public static IContainer Container { get; set; }
 
         public static IContainer Configure()
@@ -19,9 +21,8 @@ namespace AppName.Web.App_Start
             builder.RegisterAssemblyModules(typeof(AutofacConfig).Assembly);
 
             Container = builder.Build();
-
-            DependencyResolver.SetResolver(new AutofacDependencyResolver(Container));
-
+            Resolver = new AutofacDependencyResolver(Container);
+            DependencyResolver.SetResolver(Resolver);
             return Container;
         }
     }

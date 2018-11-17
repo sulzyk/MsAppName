@@ -12,5 +12,7 @@ namespace AppName.Logic.Interfaces
         Result<Product> GetById(int id);
 
         Result<Product> Add(Product product);
+
+        Result<IQueryable<Product>> GetAllActive();
     }
 }

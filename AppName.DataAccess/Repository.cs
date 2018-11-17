@@ -32,7 +32,7 @@ namespace AppName.DataAccess
             return Db.Set<T>().FirstOrDefault(m => m.Id == id);
         }
 
-        public IQueryable<T> GetAllActive()
+        public virtual IQueryable<T> GetAllActive()
         {
             return Db.Set<T>().Where(m => m.IsActive);
         }

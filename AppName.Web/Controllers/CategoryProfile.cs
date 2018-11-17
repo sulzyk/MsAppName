@@ -1,5 +1,7 @@
 ﻿using AppName.Logic.Interfaces;
 using AppName.Models;
+using AppName.Web.App_Start;
+using Autofac;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
@@ -22,6 +24,8 @@ namespace AppName.Web.Controllers
             CreateMap<Category, SelectListItem>()
                 .ForMember(dest => dest.Text, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Id));
+            CreateMap<Category, string>()
+                .ConvertUsing<CategoryToStringConverter>();
 
         }
     }
@@ -39,18 +43,14 @@ namespace AppName.Web.Controllers
         }
     }
 
-    public class IntToCategoryConverter : ITypeConverter<int, Category>
+    public class IntToCategoryConverter
+        : ITypeConverter<int, Category>
     {
-        public ICategoryLogic Logic { get; set; }
-
-        public IntToCategoryConverter(ICategoryLogic logic)
-        {
-            Logic = logic;
-        }
-
         public Category Convert(int source, Category destination, ResolutionContext context)
         {
-            var result = Logic.GetById(source);
+            var logic = AutofacConfig.Resolver.RequestLifetimeScope.Resolve<ICategoryLogic>();
+
+            var result = logic.GetById(source);
 
             if (result.Success == false)
             {
@@ -58,6 +58,19 @@ namespace AppName.Web.Controllers
             }
 
             return result.Value;
+        }
+    }
+
+    public class CategoryToStringConverter : ITypeConverter<Category, string>
+    {
+        public string Convert(Category source, string destination, ResolutionContext context)
+        {
+            if (source == null)
+            {
+                return string.Empty;
+            }
+
+            return source.Name;
         }
     }
 }

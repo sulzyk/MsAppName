@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity;
 
 namespace AppName.DataAccess
 {
@@ -14,5 +15,12 @@ namespace AppName.DataAccess
         {
 
         }
+        public override IQueryable<Product> GetAllActive()
+        {
+            return Db.Products
+                .Include(p => p.Category)
+                .Where(c => c.IsActive);
+        }
+
     }
 }

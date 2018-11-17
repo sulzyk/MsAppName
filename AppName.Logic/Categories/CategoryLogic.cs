@@ -13,6 +13,11 @@ namespace AppName.Logic.Categories
     {
         protected ICategoryRepository Repository { get; set; }
 
+        public CategoryLogic(ICategoryRepository repository)
+        {
+            Repository = repository;
+        }
+
         public Result<IQueryable<Category>> GetAllActive()
         {
             return Result.Ok(Repository.GetAllActive());

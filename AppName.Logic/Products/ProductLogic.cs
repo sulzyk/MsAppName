@@ -52,5 +52,10 @@ namespace AppName.Logic.Products
 
             return Result.Ok(product);
         }
+
+        public Result<IQueryable<Product>> GetAllActive()
+        {
+            return Result.Ok(Repository.GetAllActive());
+        }
     }
 }
