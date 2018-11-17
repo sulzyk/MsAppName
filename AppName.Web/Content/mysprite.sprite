@@ -1,0 +1,17 @@
+{
+  "images": {
+    "kursvisualstudioorazkonkrus-social": "Kurs%20Visual%20Studio%20oraz%20konkrus%20-%20social.png",
+    "kursvisualstudioorazkonkrus": "Kurs%20Visual%20Studio%20oraz%20konkrus.png"
+  },
+  "orientation": "vertical",
+  "optimize": "lossless",
+  "padding": 10,
+  "output": "png",
+  "dpi": 120,
+  "stylesheet": "css",
+  "pathprefix": "",
+  "customstyles": {
+    "display": "inline-block"
+  },
+  "appendcachebustspritesuffix": false
+}
