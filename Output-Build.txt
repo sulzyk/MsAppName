@@ -1,0 +1,9 @@
+﻿1>------ Build started: Project: AppName.Logic.Test, Configuration: Debug Any CPU ------
+1>  AppName.Logic.Test -> D:\C#\MSAppName\AppName.Logic.Test\bin\Debug\AppName.Logic.Test.dll
+========== Build: 1 succeeded, 0 failed, 4 up-to-date, 0 skipped ==========
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++++                 Please consider donating to VSColorOutput                    +++
++++                        http://mike-ward.net/donate/                          +++
++++            (this message can be turned off in the settings panel)            +++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

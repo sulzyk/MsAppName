@@ -1,6 +1,7 @@
 ﻿using AppName.Logic.Interfaces;
 using AppName.Logic.Repositories;
 using AppName.Models;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +14,9 @@ namespace AppName.Logic.Products
     {
         protected IProductRepository Repository { get; set; }
 
-        protected ProductValidator Validator { get; set; }
+        protected IValidator<Product> Validator { get; set; }
 
-        public ProductLogic(IProductRepository repository, ProductValidator validator)
+        public ProductLogic(IProductRepository repository, IValidator<Product> validator)
         {
             Repository = repository;
             Validator = validator;
