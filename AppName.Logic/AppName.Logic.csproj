@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Categories\CategoryLogic.cs" />
     <Compile Include="Interfaces\ICategoryLogic.cs" />
     <Compile Include="Interfaces\ILogic.cs" />
     <Compile Include="Interfaces\IProductLogic.cs" />

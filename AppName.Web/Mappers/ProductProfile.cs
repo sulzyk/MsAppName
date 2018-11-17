@@ -13,7 +13,9 @@ namespace AppName.Web.Mappers
         public ProductProfile()
         {
             CreateMap<Product, ProductViewModel>()
-                .ReverseMap();
+                .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.Category))
+                .ReverseMap()
+                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.CategoryId));
         }
     }
 }

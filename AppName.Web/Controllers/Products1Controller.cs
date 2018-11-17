@@ -64,12 +64,14 @@ namespace AppName.Web.Controllers
                 return View(viewModel);
             }
 
-            var product = new Product()
-            {
-                Name = viewModel.Name,
-                Price = viewModel.Price,
-                CategoryId = viewModel.CategoryId
-            };
+            //var product = new Product()
+            //{
+            //    Name = viewModel.Name,
+            //    Price = viewModel.Price,
+            //    CategoryId = viewModel.CategoryId
+            //};
+
+            var product = Mapper.Map<Product>(viewModel);
 
             var result = Logic.Add(product);
 
