@@ -10,7 +10,8 @@ namespace AppName.Logic.Interfaces
 
     public interface ICategoryLogic : ILogic
     { 
-
         Result<Category> GetById(int id);
+
+        Result<IQueryable<Category>> GetAllActive();
     }
 }

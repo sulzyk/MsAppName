@@ -13,6 +13,11 @@ namespace AppName.Logic.Categories
     {
         protected ICategoryRepository Repository { get; set; }
 
+        public Result<IQueryable<Category>> GetAllActive()
+        {
+            return Result.Ok(Repository.GetAllActive());
+        }
+
         public Result<Category> GetById(int id)
         {
             var category = Repository.GetById(id);

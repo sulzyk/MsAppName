@@ -17,10 +17,13 @@ namespace AppName.Web.Controllers
 
         protected IMapper Mapper { get; set; }
 
-        public Products1Controller(IProductLogic logic, IMapper mapper)
+        protected ICategoryLogic CategoryLogic { get; set; }
+
+        public Products1Controller(IProductLogic logic, IMapper mapper, ICategoryLogic categoryLogic)
         {
             Logic = logic;
             Mapper = mapper;
+            CategoryLogic = categoryLogic;
         }
 
 
@@ -87,13 +90,20 @@ namespace AppName.Web.Controllers
         private void Supply(ProductViewModel viewModel,
             DataContext db)
         {
-            viewModel.Categories = db.Categories
+
+            var categories = CategoryLogic.GetAllActive();
+
+            if (categories.Success)
+            {
+                viewModel.Categories = categories.Value
                 .Select(c => new SelectListItem()
                 {
                     Text = c.Name,
                     Value = c.Id.ToString()
                 })
                 .ToList();
+            }
+            
         }
     }
 }
