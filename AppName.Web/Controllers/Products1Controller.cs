@@ -7,6 +7,7 @@ using AppName.DataAccess;
 using AppName.Logic.Interfaces;
 using AppName.Models;
 using AppName.Web.ViewModels.Products;
+using AutoMapper;
 
 namespace AppName.Web.Controllers
 {
@@ -14,9 +15,12 @@ namespace AppName.Web.Controllers
     {
         protected IProductLogic Logic { get; set; }
 
-        public Products1Controller(IProductLogic logic)
+        protected IMapper Mapper { get; set; }
+
+        public Products1Controller(IProductLogic logic, IMapper mapper)
         {
             Logic = logic;
+            Mapper = mapper;
         }
 
 
